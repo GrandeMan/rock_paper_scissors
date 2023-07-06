@@ -1,9 +1,25 @@
+let restart = function () {
+    let playerSelection = prompt("Choose rock, paper, or scissors",'').toLowerCase();
+
+    while (!isValidChoice(playerSelection)) {
+        playerSelection = prompt('Please choose rock, paper, or scissors', '').toLowerCase();
+    }
+
+    playRound(playerSelection, computerSelection);
+}
+
+function isValidChoice(choice) {
+    return choice === 'rock' || choice === 'paper' || choice === 'scissors';
+}
+
 let choices = ['rock', 'paper', 'scissors'];
 
 function getComputerChoice () {
     let randomIndex = Math.floor(Math.random() * choices.length);
     return choices[randomIndex];
 }
+let playerSelection = prompt("Choose rock, paper, or scissors",'').toLowerCase();
+let computerSelection= getComputerChoice().toLowerCase();
 
 function playRound(playerSelection, computerSelection){
     if (playerSelection == computerSelection) {
@@ -17,9 +33,6 @@ function playRound(playerSelection, computerSelection){
     } else return "You win!";
 }
 
-let playerSelection = prompt("Choose rock, paper, or scissors",'').toLowerCase();
-let computerSelection= getComputerChoice().toLowerCase();
-
-console.log(computerSelection);
-console.log(playerSelection);
+// console.log(computerSelection);
+// console.log(playerSelection);
 console.log(playRound(playerSelection, computerSelection));
