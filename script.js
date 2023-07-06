@@ -1,11 +1,18 @@
-let restart = function () {
+"use strict"
+
+function restart() {
     let playerSelection = prompt("Choose rock, paper, or scissors",'').toLowerCase();
 
     while (!isValidChoice(playerSelection)) {
         playerSelection = prompt('Please choose rock, paper, or scissors', '').toLowerCase();
     }
 
+    let computerSelection= getComputerChoice().toLowerCase();
+    
     playRound(playerSelection, computerSelection);
+
+    // console.log (computerSelection);
+    // console.log(playRound(playerSelection, computerSelection));
 }
 
 function isValidChoice(choice) {
@@ -18,8 +25,8 @@ function getComputerChoice () {
     let randomIndex = Math.floor(Math.random() * choices.length);
     return choices[randomIndex];
 }
-let playerSelection = prompt("Choose rock, paper, or scissors",'').toLowerCase();
-let computerSelection= getComputerChoice().toLowerCase();
+
+let playerSelection = restart();
 
 function playRound(playerSelection, computerSelection){
     if (playerSelection == computerSelection) {
@@ -31,8 +38,6 @@ function playRound(playerSelection, computerSelection){
     } else if (playerSelection == 'scissors' && computerSelection == 'rock') {
         return "You lose! Rock beats scissors";
     } else return "You win!";
+    
 }
 
-// console.log(computerSelection);
-// console.log(playerSelection);
-console.log(playRound(playerSelection, computerSelection));
