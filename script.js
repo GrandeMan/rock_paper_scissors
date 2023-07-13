@@ -1,7 +1,6 @@
 "use strict";
 let playerScore = 0;
 let computerScore = 0;
-let gameActive = true; // Check game state
 
 function game() {
     let playerSelection;
@@ -10,10 +9,6 @@ function game() {
         let buttons = document.getElementsByClassName('buttons')[0];
 
         buttons.addEventListener('click', function(event) {
-            if (!gameActive) {
-                return; // Exit if game is inactive
-            }
-            
             let clickedElement = event.target;
             let choices = ['rock', 'paper', 'scissors'];
 
@@ -27,25 +22,28 @@ function game() {
 
             let computerSelection = getComputerChoice().toLowerCase();
 
+            playRound(playerSelection, computerSelection);
+
             let result = playRound(playerSelection, computerSelection);
 
-            if (result === "It's a tie!") {
-                return null;
-            } else if (result.startsWith("You lose")) {
-                computerScore++;
-            } else {
-                playerScore++;
-            }
-            
             const body = document.querySelector('body');
 
             let results = document.createElement('div');
-            results.textContent = result;
-            results.setAttribute('style', 'font-size: 24px; font-weight: 600;')
+            let score = document.createElement('div');
 
-            let score = document.createElement('div')
+            if (result === "It's a tie!") {
+                results.textContent = "It's a tie! You both chose " + playerSelection + ".";
+            } else if (result.startsWith("You lose")) {
+                computerScore++;
+                results.textContent = result;
+            } else {
+                playerScore++;
+                results.textContent = result;
+            }
+
+            results.setAttribute('style', 'font-size: 24px; font-weight: 600;');
             score.textContent = `Player Score: ${playerScore} | Computer Score: ${computerScore}`;
-            score.setAttribute('style', 'font-weight: 200; border: inset 2px black;')
+            score.setAttribute('style', 'font-weight: 200; border: inset 2px black;');
 
             body.append(results, score);
 
@@ -56,29 +54,26 @@ function game() {
     }
 
     function endGame() {
-        gameActive = false; // Set game state to inactive
-        
         if (playerScore === 5) {
             alert("You Win!");
         } else if (computerScore === 5) {
             alert("You Lose!");
         }
-        
+
         restartGame();
     }
-    
+
     function restartGame() {
         let restart = confirm('Would you like to play again?');
         if (restart === true) {
-            // Reset scores and restart the page
             playerScore = 0;
             computerScore = 0;
-            location.reload(); // Reload the page to reset the game
+            location.reload();
         } else {
             alert("Thanks for playing!");
         }
     }
-    
+
     getPlayerChoice();
 }
 
@@ -103,5 +98,4 @@ function playRound(playerSelection, computerSelection) {
     }
 }
 
-// Start the game
 game();
